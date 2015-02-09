@@ -1,0 +1,6 @@
+Relations:
+Reservation(_id_,_performanceId_,_username_)
+User(_username_,name,phone)
+Movie performance(,_theatreName_,(_movieName_,_date_),seats) --two key constraints (movieName and Date)
+Theatre(_theatreName_,seats)
+Movie(_movieName_)

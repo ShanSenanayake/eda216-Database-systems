@@ -1,0 +1,151 @@
+3a:
+
+select firstName, lastName
+from Students;
+
+3b:
+
+select firstName, lastName
+from Students
+order by lastName, firstname;
+
+3c:
+
+select *
+from Students
+where pNBr like '85%';
+
+3d:
+
+select *
+from Students
+where mod(substr(pNbr,10,1),2) = 0;
+
+3e:
+
+select count(*)
+from Students;
+
+3f:
+
+select *
+from Courses
+where courseCode like 'FMA%';
+
+3g:
+
+select *
+from Courses
+where credits > 7.5;
+
+3h:
+
+select count(*), level
+from Courses
+group by level;
+
+3i:
+
+select CourseCode
+from TakenCourses
+where pNbr = '910101-1234';
+
+3j:
+
+select CourseName, Credits
+from Courses
+where courseCode in (select CourseCode
+from TakenCourses
+where pNbr = '910101-1234');
+
+3k:
+
+select sum(Credits)
+from Courses
+where courseCode in (select CourseCode
+from TakenCourses
+where pNbr = '910101-1234');
+
+3l:
+
+select avg(Grade)
+from TakenCourses
+where pNbr = '910101-1234';
+
+3mi:
+
+select CourseCode
+from TakenCourses
+where pNbr = (select pNbr
+from Students
+where firstName = 'Eva' and lastName = 'Alm');
+
+3mj:
+
+select CourseName, Credits
+from Courses 
+where courseCode in (select CourseCode
+from TakenCourses
+where pNbr = (select pNbr
+from Students
+where firstName = 'Eva' and lastName = 'Alm'));
+
+select CourseName, Credits
+from Courses natural join TakenCourses natural join Students
+where firstName = 'Eva' and lastName = 'Alm';
+
+3mk:
+
+select sum(Credits)
+from Courses natural join TakenCourses natural join Students
+where firstName = 'Eva' and lastName = 'Alm';
+
+3ml:
+
+select avg(Grade)
+from TakenCourses natural join Students
+where firstName = 'Eva' and lastName = 'Alm';
+
+3n:
+
+select *
+from Students
+where pNbr not in (select pNbr
+from TakenCourses);
+
+3o:
+
+create view v(pNbr,avgGrade) as 
+select pNbr, avg(Grade)
+from  Students natural join TakenCourses
+group by pNbr;
+
+select pNbr, max(avgGrade)
+from v;
+
+3p:
+
+create view v2(pNbr, totCredits) as
+select s.pNbr, coalesce(sum(Credits),0)
+from Students s left outer join TakenCourses t natural join Courses c
+on s.pNbr = t.pNbr
+group by s.pNbr;
+
+3q:
+
+select *
+from Students s
+where s.lastName in (
+select lastName
+from Students
+group by lastName,firstName 
+having count(*) > 1) and s.firstName in (
+select firstName
+from Students
+group by lastName,firstName 
+having count(*) > 1);
+
+
+select distinct fst.firstName, fst.lastName, fst.pNbr
+from Students fst, Students snd
+where fst.firstName = snd.firstName and fst.lastName = snd.lastName and fst.pNbr != snd.pNbr;
