@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/neo-lib/concurrentlinkedhashmap-lru-1.3.1.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/geronimo-jta_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/lucene-core-3.6.2.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/neo4j-cypher-2.0.0-M05.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/neo4j-graph-algo-2.0.0-M05.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/neo4j-graph-matching-2.0.0-M05.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/neo4j-jmx-2.0.0-M05.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/neo4j-kernel-2.0.0-M05.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/neo4j-lucene-index-2.0.0-M05.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/neo4j-shell-2.0.0-M05.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/neo4j-udc-2.0.0-M05.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/org.apache.servicemix.bundles.jline-0.9.94_1.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/parboiled-core-1.1.6.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/parboiled-scala_2.10-1.1.6.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/scala-library-2.10.2.jar"/>
+	<classpathentry kind="lib" path="/neo-lib/server-api-2.0.0-M05.jar"/>
+	<classpathentry kind="lib" path="/jersey/jersey-bundle-1.17.1.jar"/>
+	<classpathentry kind="lib" path="/jackson/jackson-all-1.9.11.jar"/>
+	<classpathentry kind="lib" path="/neo-rest-graphdb/neo4j-rest-graphdb-2.0.0-20130719.090126-7.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
