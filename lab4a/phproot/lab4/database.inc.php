@@ -94,12 +94,10 @@ class Database {
 				try {
 			$stmt = $this->conn->prepare($query);
 			$stmt->execute($param);
-			$result = $stmt->fetchAll();
 		} catch (PDOException $e) {
 			$error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
 			die($error);
 		}
-		return $result;
 	}
 	
 	/**
@@ -147,12 +145,14 @@ class Database {
 		}else{
 			$sql = "update movieperformance set seats = ? where performanceDate = ? and movieName =  ?";
 			$seats = $row['seats'] -1;
-			$this->executeQuery($sql,array($seats,$date,$movieName));
+			$this->executeUpdate($sql,array($seats,$date,$movieName));
 			$sql = "insert into reservation values(null,?,?,?)";
-			$deli =$this->executeQuery($sql,array($user,$movieName,$date));
+			$this->executeUpdate($sql,array($user,$movieName,$date));
+			$sql = "select last_insert_id()";
+			$deli = $this->executeQuery($sql,null);
 			foreach($deli as $attr){
 				$this->conn->commit();
-				return $deli['ID'];
+				return $attr['last_insert_id()'];
 			}
 		}
 	}

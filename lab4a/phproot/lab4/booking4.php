@@ -15,7 +15,11 @@
 <html>
 <head><title>Booking 4</title><head>
 <body><h1>Booking 4</h1>
-	<?php print $bookNumber;?>
+	<?php if ($bookNumber != -1) {
+					print "Booking successfull, your reservations id is: ". $bookNumber;
+				} else {
+					print "Booking unsuccessfull, seats full";
+				}?>
 	</form>
 <form method="post" action="booking1.php">
 		<input type=submit value="New Booking">
