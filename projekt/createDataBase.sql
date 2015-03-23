@@ -25,7 +25,7 @@ primary key (ingredientName)
 );
 create table Batches (
 CookieName varchar(30),
-BatchID integer not null auto_increment,
+BatchID integer not null,
 ProductionDate date,
 foreign key (CookieName) references Cookies(CookieName),
 primary key (BatchID)
@@ -65,7 +65,7 @@ primary key (OrderID,PalletID)
 );
 
 create table OrderEntries (
-CookieName integer not null,
+CookieName varchar(30),
 OrderID integer not null,
 NbrPallets integer not null,
 foreign key (OrderID) references Orders(ID),
@@ -109,22 +109,20 @@ insert into RecipeEntries values('Denhis Bao zi', 'Mjöl', 30);
 insert into RecipeEntries values('Denhis Bao zi', 'Ägg', 3);
 insert into RecipeEntries values('Denhis Bao zi', 'Socker', 20);
 
-insert into Batches values('Denhis Bao zi',null,'2015-02-28');
-insert into Pallets values(null,'hemma', last_insert_id());
-insert into Pallets values(null,'bop', last_insert_id());
-insert into Pallets values(null,'hemma', last_insert_id());
+insert into Batches values('Denhis Bao zi',1,'2015-02-28');
+insert into Batches values('Denhis Bao zi',2,'2015-02-23');
+insert into Batches values('Emelies Super Kakor',3,'2015-03-10');
+insert into Batches values('Ballerina',4,'2015-01-10');
 
-insert into Batches values('Denhis Bao zi',null,'2015-02-23');
-insert into Pallets values(null,'hemma', last_insert_id());
-insert into Pallets values(null,'hemma', last_insert_id());
-
-insert into Batches values('Emelies Super Kakor',null,'2015-03-10');
-insert into Pallets values(null,'trolol', last_insert_id());
-insert into Pallets values(null,'hemma', last_insert_id());
-
-insert into Batches values('Ballerina',null,'2015-01-10');
-insert into Pallets values(null,'hejsan', last_insert_id());
-insert into Pallets values(null,'johnsHouse', last_insert_id());
+insert into Pallets values(null,'hemma', 1);
+insert into Pallets values(null,'bop', 1);
+insert into Pallets values(null,'hemma', 1);
+insert into Pallets values(null,'hemma', 2);
+insert into Pallets values(null,'hemma', 2);
+insert into Pallets values(null,'trolol', 3);
+insert into Pallets values(null,'hemma', 3);
+insert into Pallets values(null,'hejsan', 4);
+insert into Pallets values(null,'johnsHouse', 4);
 
 insert into Customers values('Maria Persson AB', 'Fagottalley 34B');
 insert into Customers values('John projektor AB', 'derpvägen 27');
@@ -132,8 +130,12 @@ insert into Customers values('The crazy rooster Inc.', 'Hönsvägen 58');
 
 insert into Orders values(null);
 insert into Contracts values('Maria Persson AB',last_insert_id());
+insert into OrderEntries values('Emelies Super Kakor',last_insert_id(), 5);
+insert into OrderEntries values('Denhis Bao zi',last_insert_id(), 3);
 
 insert into Orders values(null);
-insert into Contracts values('Maria Persson AB',last_insert_id());
+insert into Contracts values('John projektor AB',last_insert_id());
+insert into OrderEntries values('Ballerina',last_insert_id(),10);
+insert into OrderEntries values('Denhis Bao zi',last_insert_id(),100);
 
   
