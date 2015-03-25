@@ -27,7 +27,7 @@
 
 <ul>
   <li><a href="production.php">Production</a></li>
-  <li><a href="search.php">Searching and Blocking</a></li>
+  <li><a href="searchandblock.php">Searching and Blocking</a></li>
 </ul>
 
 

@@ -110,10 +110,70 @@ class Database {
 		return $result;
 	}
 
-	public function getDates($movieName){
-		$sql = "select performanceDate from movieperformance where moviename = ?";
-		$result = $this->executeQuery($sql,array($movieName));
+	public function createBatch($cookieName,$nbrPallets){
+		$sql = "select IngredientName, Amount from recipeEntries where cookieName = ?";
+		$result = $this->executeQuery($sql,array($cookieName));
+		$this->conn->beginTransaction();
+		$sql2 = "select * from Ingredients where IngredientName = ?";
+		foreach($result as $row) {
+			$result2 = $this->executeQuery($sql2,array($row['IngredientName']));
+			foreach($result2 as $row2){
+				if($row2['Stock'] < $row['Amount']*$nbrPallets){
+					$this->conn->rollback();
+					return -1;
+				}else{
+					$stock = ($row2['Stock']- $row['Amount']*$nbrPallets);
+					$ingredientName = $row['IngredientName'];
+					$sql = "update ingredients set stock = ? where ingredientName = ?";
+					$this->executeUpdate($sql,array($stock,$ingredientName));
+				}
+			}
+		}
+		$sql = "select curdate()";
+		$date = $this->executeQuery($sql,null);
+		$sql = "insert into batches values(?,null,?)";
+		foreach($date as $attr){
+			$this->executeUpdate($sql,array($cookieName,$attr['curdate()']));
+		}
+		$sql = "select last_insert_id()";
+		$result = $this->executeQuery($sql,null);
+		$lastID = -1;
+		foreach($result as $attr){
+			$lastID = $attr['last_insert_id()'];
+		}
+		$sql = "insert into pallets values(null,'hemma',?)";
+		for($x = 0; $x<$nbrPallets;$x++){
+			$this->executeUpdate($sql,array($lastID));
+		}
+		$this->conn->commit();
+		return $lastID;
+	
+	
+	}
+	
+	public function getPallets(){
+		$sql = "select * from pallets where isblocked = 0";
+		$result = $this->executeQuery($sql,null);
 		return $result;
+	}
+
+	public function blockPallet($pallet){
+		$this->setBlock(1,$pallet);
+	}
+	public function unblockPallet($pallet){
+		$this->setBlock(0,$pallet);
+	}
+
+	public function setBlock($blockBool,$pallet){
+		$sql = "update pallets set isBlocked = ? where palletId = ?";
+		$this->executeUpdate($sql,array($blockBool ,$pallet)); 
+	}
+
+
+	public function getPalletInfo($pallet){
+		$sql = "select * from pallets where palletId = ?";
+		$palletInfo = $this->executeQuery($sql,array($pallet));
+		return $palletInfo; 
 	}
 
 	public function getTheatreInfo($movieName, $date){

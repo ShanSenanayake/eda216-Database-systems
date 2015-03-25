@@ -25,7 +25,7 @@ primary key (ingredientName)
 );
 create table Batches (
 CookieName varchar(30),
-BatchID integer not null,
+BatchID integer not null auto_increment,
 ProductionDate date,
 foreign key (CookieName) references Cookies(CookieName),
 primary key (BatchID)
@@ -34,6 +34,7 @@ create table Pallets (
 PalletID integer not null auto_increment,
 Location varchar(30) not null,
 BatchID integer not null,
+isBlocked bool,
 foreign key (BatchID) references Batches(BatchID),
 primary key (PalletID)
 );
@@ -88,41 +89,44 @@ insert into Cookies values('Emelies Super Kakor');
 insert into Cookies values('Denhis Bao zi');
 
 insert into Ingredients values('Socker', 500000);
-insert into Ingredients values('Mjöl', 200000);
-insert into Ingredients values('Ägg', 300000);
+insert into Ingredients values('Mjol', 200000);
+insert into Ingredients values('Agg', 300000);
 insert into Ingredients values('Kokos', 300400);
 insert into Ingredients values('Kakao', 333300);
 insert into Ingredients values('Vanlij', 7000);
-insert into Ingredients values('Köttfärs', 4000);
+insert into Ingredients values('Kottfars', 4000);
 
 insert into RecipeEntries values('Ballerina', 'Socker', 30);
-insert into RecipeEntries values('Ballerina', 'Mjöl', 50);
+insert into RecipeEntries values('Ballerina', 'Mjol', 50);
 insert into RecipeEntries values('Ballerina', 'Kakao', 10);
 insert into RecipeEntries values('Emelies Super Kakor', 'Kakao', 100);
 insert into RecipeEntries values('Emelies Super Kakor', 'Vanlij', 1);
-insert into RecipeEntries values('Emelies Super Kakor', 'Ägg', 2);
-insert into RecipeEntries values('Emelies Super Kakor', 'Mjöl', 50);
+insert into RecipeEntries values('Emelies Super Kakor', 'Agg', 2);
+insert into RecipeEntries values('Emelies Super Kakor', 'Mjol', 50);
 insert into RecipeEntries values('Emelies Super Kakor', 'Kokos', 40);
 insert into RecipeEntries values('Denhis Bao zi', 'Kokos', 33);
-insert into RecipeEntries values('Denhis Bao zi', 'Köttfärs', 50);
-insert into RecipeEntries values('Denhis Bao zi', 'Mjöl', 30);
-insert into RecipeEntries values('Denhis Bao zi', 'Ägg', 3);
+insert into RecipeEntries values('Denhis Bao zi', 'Kottfars', 50);
+insert into RecipeEntries values('Denhis Bao zi', 'Mjol', 30);
+insert into RecipeEntries values('Denhis Bao zi', 'Agg', 3);
 insert into RecipeEntries values('Denhis Bao zi', 'Socker', 20);
 
-insert into Batches values('Denhis Bao zi',1,'2015-02-28');
-insert into Batches values('Denhis Bao zi',2,'2015-02-23');
-insert into Batches values('Emelies Super Kakor',3,'2015-03-10');
-insert into Batches values('Ballerina',4,'2015-01-10');
+insert into Batches values('Denhis Bao zi',null,'2015-02-28');
+insert into Pallets values(null,'in Stock', (SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db17' AND   TABLE_NAME   = 'batches')-1,0);
+insert into Pallets values(null,'in Stock',  (SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db17' AND   TABLE_NAME   = 'batches')-1,0);
+insert into Pallets values(null,'in Stock',  (SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db17' AND   TABLE_NAME   = 'batches')-1,0);
 
-insert into Pallets values(null,'hemma', 1);
-insert into Pallets values(null,'bop', 1);
-insert into Pallets values(null,'hemma', 1);
-insert into Pallets values(null,'hemma', 2);
-insert into Pallets values(null,'hemma', 2);
-insert into Pallets values(null,'trolol', 3);
-insert into Pallets values(null,'hemma', 3);
-insert into Pallets values(null,'hejsan', 4);
-insert into Pallets values(null,'johnsHouse', 4);
+
+insert into Batches values('Denhis Bao zi',null,'2015-02-23');
+insert into Pallets values(null,'in Stock', (SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db17' AND   TABLE_NAME   = 'batches')-1,0);
+insert into Pallets values(null,'in Stock', (SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db17' AND   TABLE_NAME   = 'batches')-1,0);
+
+insert into Batches values('Emelies Super Kakor',null,'2015-03-10');
+insert into Pallets values(null,'in Stock', (SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db17' AND   TABLE_NAME   = 'batches')-1,0);
+insert into Pallets values(null,'in Stock', (SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db17' AND   TABLE_NAME   = 'batches')-1,0);
+
+insert into Batches values('Ballerina',null,'2015-01-10');
+insert into Pallets values(null,'in Stock', (SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db17' AND   TABLE_NAME   = 'batches')-1,0);
+insert into Pallets values(null,'in Stock', (SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db17' AND   TABLE_NAME   = 'batches')-1,0);
 
 insert into Customers values('Maria Persson AB', 'Fagottalley 34B');
 insert into Customers values('John projektor AB', 'derpvägen 27');

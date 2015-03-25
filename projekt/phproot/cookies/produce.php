@@ -18,7 +18,7 @@
 		if ($BatchID<0) {
 			print "Could not create batch";
 		}else{
-			print "Created batch with id" . $BatchID;
+			print "Created batch with id " . $BatchID;
 		}
 	?>
 <form action="index.php">
