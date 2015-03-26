@@ -60,6 +60,7 @@ primary key (IngredientName,CookieName)
 create table OrderedPallets (
 OrderID integer not null,
 PalletID integer not null,
+DeliveryDate date,
 foreign key (OrderID) references Orders(ID),
 foreign key (PalletID) references Pallets(PalletID),
 primary key (OrderID,PalletID)
@@ -129,6 +130,7 @@ insert into Pallets values(null,'in Stock', (SELECT `AUTO_INCREMENT` FROM  INFOR
 insert into Pallets values(null,'in Stock', (SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db17' AND   TABLE_NAME   = 'batches')-1,0);
 
 insert into Customers values('Maria Persson AB', 'Fagottalley 34B');
+insert into Customers values('Fredrik Folkersson AB', 'Spartavägen 47F');
 insert into Customers values('John projektor AB', 'derpvägen 27');
 insert into Customers values('The crazy rooster Inc.', 'Hönsvägen 58');
 
@@ -136,6 +138,9 @@ insert into Orders values(null);
 insert into Contracts values('Maria Persson AB',last_insert_id());
 insert into OrderEntries values('Emelies Super Kakor',last_insert_id(), 5);
 insert into OrderEntries values('Denhis Bao zi',last_insert_id(), 3);
+insert into OrderedPallets values(last_insert_id(),1, '2013-02-05');
+update Pallets set location = (select Address from Customers natural join Contracts where OrderID = last_insert_id()) where PalletId = 1;
+
 
 insert into Orders values(null);
 insert into Contracts values('John projektor AB',last_insert_id());
