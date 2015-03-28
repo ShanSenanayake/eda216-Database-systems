@@ -80,7 +80,7 @@ CustomerName varchar(30),
 OrderID integer not null,
 foreign key (OrderID) references Orders(ID),
 foreign key (CustomerName) references Customers(CustomerName),
-primary key (OrderID,CustomerName)
+primary key (OrderID)
 );
 
 
