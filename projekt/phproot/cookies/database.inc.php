@@ -141,7 +141,7 @@ class Database {
 		foreach($result as $attr){
 			$lastID = $attr['last_insert_id()'];
 		}
-		$sql = "insert into pallets values(null,'hemma',?,0)";
+		$sql = "insert into pallets values(null,'in Stock',?,0)";
 		for($x = 0; $x<$nbrPallets;$x++){
 			$this->executeUpdate($sql,array($lastID));
 		}
@@ -176,34 +176,11 @@ class Database {
 		return $palletInfo; 
 	}
 
-	public function getTheatreInfo($movieName, $date){
-		$sql = "select * from moviePerformance where movieName = ? and performanceDate = ?";
-	$result = $this->executeQuery($sql,array($movieName,$date));
-	return $result;
+	public function getAllPallets($startDate,$endDate){
+		$sql = "select * from pallets natural join batches where ProductionDate>? and ProductionDate<? and isBlocked = 0";
+		$result = $this->executeQuery($sql,array($startDate,$endDate));
+		return $result;
 	}
-	
-	public function bookTicket($movieName, $date,$user){
-		$this->conn->beginTransaction();
-		$sql = "select * from moviePerformance where movieName = ? and performanceDate = ?";
-	$result = $this->executeQuery($sql,array($movieName,$date));
-	foreach($result as $row){
-		if($row['seats'] == 0){
-			$this->conn->rollback();
-			return -1;
-		}else{
-			$sql = "update movieperformance set seats = ? where performanceDate = ? and movieName =  ?";
-			$seats = $row['seats'] -1;
-			$this->executeUpdate($sql,array($seats,$date,$movieName));
-			$sql = "insert into reservation values(null,?,?,?)";
-			$this->executeUpdate($sql,array($user,$movieName,$date));
-			$sql = "select last_insert_id()";
-			$deli = $this->executeQuery($sql,null);
-			foreach($deli as $attr){
-				$this->conn->commit();
-				return $attr['last_insert_id()'];
-			}
-		}
-	}
-	}
+
 }
 ?>

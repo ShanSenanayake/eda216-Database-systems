@@ -4,11 +4,13 @@
 	
 	session_start();
 	$db = $_SESSION['db'];
+	$pallets = $_SESSION['pallets'];
 	$db->openConnection();
-	$pallets = $db->getPallets();
+	foreach($pallets as $row){
+		$db->blockPallet($row['PalletID']);
+	}
 	$db->closeConnection();
 ?>
-
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -55,7 +57,7 @@
           <ul class="nav navbar-nav">
             <li><a href="Index.php">Home</a></li>
             <li><a href="Production.php">Production</a></li>
-            <li class="active"><a href="Searchandblock.php">Searching and blocking</a></li>
+            <li><a href="Searchandblock.php">Searching and blocking</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -64,44 +66,18 @@
     <div class="container">
 
       <div class="starter-template">
-		<form  method=post action="Block.php">
-		<h2>Select pallet to block</h2>
-		<br>
-		<select class="form-control" name="pallet" size=10>
-		<?php
-			$first = true;
-			foreach ($pallets as $row) {
-				
-				if ($first) {
-					print "<option selected>";
-					$first = false;
-				} else {
-					print "<option>";
-				}
-				print $row['PalletID'] . " " . $row['Location'];
-			
+        <h1>Blocking</h1>
+	Succesfully blocked pallets with id:
+	<br>
+	<?php 
+		foreach($pallets as $row){
+		print $row['PalletID'] . "<br>";
 		}
 		?>
-		</select>
-    <input class="btn btn-default" type="submit" value="Block">
-</form>
-<br>
-<form method=post action="Search.php">
- <h2>Search for pallet with ID</h2>
-	<br>
-    <input class="form-control" type="text" size="20" name="pallet" >
-    <input class="btn btn-default" type="submit" value="Search">
-</form>
-<form action="Date.php">
-<br>
-  <h2>Search between dates</h2>
-	<br>
-	<input class="btn btn-default" type="date" name="start">
-	<input class="btn btn-default" type="date" name="end">
-	<br>
-	<input class="btn btn-default" type="submit" value="Search">
-</form>
-
+	</form>
+<form method="post" action="Index.php">
+		<input class="btn btn-default" type=submit value="Return to home page">
+</form>	
       </div>
 
     </div><!-- /.container -->

@@ -4,11 +4,13 @@
 	
 	session_start();
 	$db = $_SESSION['db'];
+	$startDate = $_REQUEST['start'];
+	$endDate = $_REQUEST['end'];
 	$db->openConnection();
-	$pallets = $db->getPallets();
+	$pallets = $db->getAllPallets($startDate,$endDate);
 	$db->closeConnection();
+	$_SESSION['pallets'] = $pallets;
 ?>
-
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -55,7 +57,7 @@
           <ul class="nav navbar-nav">
             <li><a href="Index.php">Home</a></li>
             <li><a href="Production.php">Production</a></li>
-            <li class="active"><a href="Searchandblock.php">Searching and blocking</a></li>
+            <li><a href="Searchandblock.php">Searching and blocking</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -63,45 +65,33 @@
 
     <div class="container">
 
-      <div class="starter-template">
-		<form  method=post action="Block.php">
-		<h2>Select pallet to block</h2>
-		<br>
-		<select class="form-control" name="pallet" size=10>
-		<?php
-			$first = true;
-			foreach ($pallets as $row) {
-				
-				if ($first) {
-					print "<option selected>";
-					$first = false;
-				} else {
-					print "<option>";
-				}
-				print $row['PalletID'] . " " . $row['Location'];
-			
-		}
-		?>
-		</select>
-    <input class="btn btn-default" type="submit" value="Block">
-</form>
-<br>
-<form method=post action="Search.php">
- <h2>Search for pallet with ID</h2>
-	<br>
-    <input class="form-control" type="text" size="20" name="pallet" >
-    <input class="btn btn-default" type="submit" value="Search">
-</form>
-<form action="Date.php">
-<br>
-  <h2>Search between dates</h2>
-	<br>
-	<input class="btn btn-default" type="date" name="start">
-	<input class="btn btn-default" type="date" name="end">
-	<br>
-	<input class="btn btn-default" type="submit" value="Search">
-</form>
 
+      <h2>Search Results</h2>                                                                                 
+      <div class="table table-striped">          
+      <table class="table" >
+        <thead>
+          <tr>
+            <th>Pallet ID</th>
+            <th>Location</th>
+			<th>Production Date</th>
+          </tr>
+        </thead>
+        <tbody>
+		<?php 
+			foreach($pallets as $row){
+				print "<tr>";
+				print "<td>" . $row['PalletID'] . "</td>";
+				print "<td>" . $row['Location'] . "</td>";
+				print "<td>" .  $row['ProductionDate'] . "</td>";
+				print "</tr>";
+				} ?>
+        </tbody>
+      </table>
+
+<br>
+<form method=post action="Block3.php">
+	<input class="btn btn-default" type="submit" value="Block All">
+</form>
       </div>
 
     </div><!-- /.container -->
