@@ -4,11 +4,9 @@
 	
 	session_start();
 	$db = $_SESSION['db'];
-	$cookieName = $_REQUEST['cookieName'];
-	$nbrPallets = $_REQUEST['nbrPallets'];
+	$pallet = $_SESSION['block'];
 	$db->openConnection();
-	
-	$BatchID = $db->createBatch($cookieName,$nbrPallets);
+	$db->blockPallet($pallet);
 	$db->closeConnection();
 ?>
 <html lang="en"><head>
@@ -66,17 +64,12 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Produced Batch</h1>
-	<?php
-		if ($BatchID<0) {
-			print "Could not create batch";
-		}else{
-			print "Created batch with id " . $BatchID;
-		}
-	?>
-<form action="index.php">
-    <input class="btn btn-default" type="submit" value="Return to home page">
-</form>
+        <h1>Blocking</h1>
+	Successfully blocked pallet with id <?php print $pallet;?>
+	</form>
+<form method="post" action="Index.php">
+		<input class="btn btn-default" type=submit value="Return to home page">
+</form>	
       </div>
 
     </div><!-- /.container -->

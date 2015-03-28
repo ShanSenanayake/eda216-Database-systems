@@ -65,7 +65,7 @@
 
       <div class="starter-template">
        <h1>Search and Block</h1>
-<form  method=post action="block.php">
+		<form  method=post action="Block.php">
 		Select pallet to block:
 		<br>
 		<select class="form-control" name="pallet" size=10>
@@ -87,7 +87,7 @@
     <input class="btn btn-default" type="submit" value="Block">
 </form>
 <br>
-<form method=post action="search.php">
+<form method=post action="Search.php">
  Search for pallet with ID:
 	<br>
     <input class="form-control" type="text" size="20" name="pallet" >

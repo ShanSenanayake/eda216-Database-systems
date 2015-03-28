@@ -141,7 +141,7 @@ class Database {
 		foreach($result as $attr){
 			$lastID = $attr['last_insert_id()'];
 		}
-		$sql = "insert into pallets values(null,'hemma',?)";
+		$sql = "insert into pallets values(null,'hemma',?,0)";
 		for($x = 0; $x<$nbrPallets;$x++){
 			$this->executeUpdate($sql,array($lastID));
 		}

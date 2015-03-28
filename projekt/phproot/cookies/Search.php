@@ -4,12 +4,11 @@
 	
 	session_start();
 	$db = $_SESSION['db'];
-	$cookieName = $_REQUEST['cookieName'];
-	$nbrPallets = $_REQUEST['nbrPallets'];
+	$pallet = $_REQUEST['pallet'];
 	$db->openConnection();
-	
-	$BatchID = $db->createBatch($cookieName,$nbrPallets);
+	$pallet = $db->getPalletInfo($pallet);
 	$db->closeConnection();
+
 ?>
 <html lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -66,17 +65,34 @@
     <div class="container">
 
       <div class="starter-template">
-        <h1>Produced Batch</h1>
-	<?php
-		if ($BatchID<0) {
-			print "Could not create batch";
+        <h1>Search Result</h1>
+	<?php 
+		if(empty($pallet)){
+			print "No such pallet exists";
 		}else{
-			print "Created batch with id " . $BatchID;
-		}
-	?>
-<form action="index.php">
-    <input class="btn btn-default" type="submit" value="Return to home page">
-</form>
+			foreach($pallet as $row){
+				if($row['isBlocked'] == 1){ ?>
+					<form method="post" action="Unblock.php">
+					<?php 
+						print $row['PalletID'] . " " . $row['Location'] . " Yes"; 
+						$_SESSION['unblock'] = $row['PalletID'];
+						?>
+					<input class="btn btn-default" type=submit value="Unblock">
+				<?php }else{ ?>
+					<form method="post" action="Block2.php">
+					<?php 
+						print $row['PalletID'] . " " . $row['Location'] . " No"; 
+						$_SESSION['block'] = $row['PalletID'];
+						?>
+					<input class="btn btn-default" type=submit value="Block">
+				<?php }		
+			}
+		} ?>
+<br>
+</form>	
+<form method="post" action="Index.php">
+	<input class="btn btn-default" type=submit value="Return to home page">
+</form>	
       </div>
 
     </div><!-- /.container -->
