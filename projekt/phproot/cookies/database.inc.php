@@ -111,6 +111,9 @@ class Database {
 	}
 
 	public function createBatch($cookieName,$nbrPallets){
+		if(ctype_digit($nbrPallets)==false || $nbrPallets <1){
+			return -1;
+		}
 		$sql = "select IngredientName, Amount from recipeEntries where cookieName = ?";
 		$result = $this->executeQuery($sql,array($cookieName));
 		$this->conn->beginTransaction();
@@ -152,7 +155,7 @@ class Database {
 	}
 	
 	public function getPallets(){
-		$sql = "select * from pallets where isblocked = 0";
+		$sql = "select * from pallets natural join batches where isblocked = 0";
 		$result = $this->executeQuery($sql,null);
 		return $result;
 	}
@@ -171,7 +174,7 @@ class Database {
 
 
 	public function getPalletInfo($pallet){
-		$sql = "select * from pallets where palletId = ?";
+		$sql = "select * from pallets natural join batches where palletId = ?";
 		$palletInfo = $this->executeQuery($sql,array($pallet));
 		return $palletInfo; 
 	}

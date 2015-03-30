@@ -74,7 +74,7 @@
 			print "Created batch with id " . $BatchID;
 		}
 	?>
-<form action="index.php">
+<form action="Index.php">
     <input class="btn btn-default" type="submit" value="Return to home page">
 </form>
       </div>

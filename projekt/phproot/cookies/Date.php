@@ -74,6 +74,7 @@
             <th>Pallet ID</th>
             <th>Location</th>
 			<th>Production Date</th>
+			<th>Cookie Name</th>
           </tr>
         </thead>
         <tbody>
@@ -83,6 +84,7 @@
 				print "<td>" . $row['PalletID'] . "</td>";
 				print "<td>" . $row['Location'] . "</td>";
 				print "<td>" .  $row['ProductionDate'] . "</td>";
+				print "<td>" .  $row['CookieName'] . "</td>";
 				print "</tr>";
 				} ?>
         </tbody>

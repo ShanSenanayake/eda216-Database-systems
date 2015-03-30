@@ -74,14 +74,14 @@
 				if($row['isBlocked'] == 1){ ?>
 					<form method="post" action="Unblock.php">
 					<?php 
-						print $row['PalletID'] . " " . $row['Location'] . " Yes"; 
+						print $row['PalletID'] . " " . $row['Location'] . " " . $row['CookieName'] . " Yes"; 
 						$_SESSION['unblock'] = $row['PalletID'];
 						?>
 					<input class="btn btn-default" type=submit value="Unblock">
 				<?php }else{ ?>
 					<form method="post" action="Block2.php">
 					<?php 
-						print $row['PalletID'] . " " . $row['Location'] . " No"; 
+						print $row['PalletID'] . " " . $row['Location'] . " " . $row['CookieName'] . " No"; 
 						$_SESSION['block'] = $row['PalletID'];
 						?>
 					<input class="btn btn-default" type=submit value="Block">

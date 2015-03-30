@@ -78,7 +78,7 @@
 				} else {
 					print "<option>";
 				}
-				print $row['PalletID'] . " " . $row['Location'];
+				print $row['PalletID'] . " " . $row['Location'] . " " . $row['CookieName'] ;
 			
 		}
 		?>
